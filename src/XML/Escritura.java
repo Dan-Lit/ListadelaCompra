@@ -102,10 +102,9 @@ public class Escritura {
         }
     }
 
-    public static void crearXMLvacio(String URL) {
+    public static void crearXMLvacio() {
         /**
-         * Si es la primera vez que se ejecuta el programa, se creará un archivo
-         * .xml vacío.
+         * Si es la primera vez que se ejecuta el programa, se creará un archivo .xml vacío.
          */
         try {
 

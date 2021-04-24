@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractButton;
-import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -66,9 +65,6 @@ public class Ventana_Principal extends JFrame implements ActionListener{
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblImagen = new JLabel();
-		lblImagen.setIcon(new ImageIcon(Ventana_Principal.class.getResource("/imagenes/fondo.jpg")));
-		panel.add(lblImagen, BorderLayout.CENTER);
 	}
 
 	@Override
