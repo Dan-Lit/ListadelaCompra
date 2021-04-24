@@ -1,4 +1,4 @@
-# Listadelacompra
+# Aplicación Lista de la compra
 Creé esta aplicación para una amiga, que me contó que para ahorrar al hacer la compra le gustaría saber qué ingredientes necesitaba comprar en función de su menú semanal.
 
 El objetivo era, por lo tanto, desarrollar una app con capacidad de almacenar recetas junto a sus ingredientes. La aplicación te permite seleccionar los platos, y te elabora una lista de la compra con los ingredientes correspondientes.
