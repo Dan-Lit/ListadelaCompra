@@ -9,7 +9,7 @@ public class Main {
         String URL = "recetario.xml";
         File file = new File(URL);
         
-        if (!file.exists()) Escritura.crearXMLvacio(URL);
+        if (!file.exists()) Escritura.crearXMLvacio();
         
         Ventana_Principal v = new Ventana_Principal();
     }
