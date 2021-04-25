@@ -41,13 +41,11 @@ public class Ventana_Listar extends JDialog implements ActionListener {
     }
 
     private void iniciarComponentes() {
-        //contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
         JLabel lblTitulo = new JLabel("Generar lista");
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        //lblTitulo.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
         lblTitulo.setBounds(10, 10, 599, 28);
         contentPanel.add(lblTitulo);
 
