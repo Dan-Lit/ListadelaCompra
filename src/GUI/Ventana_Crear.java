@@ -37,13 +37,11 @@ public class Ventana_Crear extends JDialog implements ActionListener {
     }
 
     private void iniciarComponentes() {
-        //contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
         JLabel lblTitulo = new JLabel("Creación de receta");
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        //lblTitulo.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
         lblTitulo.setBounds(10, 10, 599, 28);
         contentPanel.add(lblTitulo);
 
