@@ -49,7 +49,6 @@ public class Ventana_Borrar extends JDialog implements ActionListener, ItemListe
 
         JLabel lblTitulo = new JLabel("Borrar receta");
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        //lblTitulo.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
         lblTitulo.setBounds(10, 10, 599, 28);
         contentPanel.add(lblTitulo);
 
