@@ -64,6 +64,40 @@ public class Escritura {
 
     }
 
+    public static void editarReceta(String nombreReceta) {
+
+        /**
+         * Edita una receta ya registrada.
+         *
+         * @param nombreReceta nombre de la receta.
+         * @author Daniel
+         */
+        ArrayList<String> recetasRegistradas = Lector.listaRecetas();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        Document document;
+
+        try {
+            document = dbf.newDocumentBuilder().parse(new File(URL));
+
+            XPathFactory xpf = XPathFactory.newInstance();
+            XPath xpath = xpf.newXPath();
+            String xpathexpr = "//recetario/receta[nombre='" + nombreReceta + "']";
+            XPathExpression expression = xpath.compile(xpathexpr);
+
+            Node node = (Node) expression.evaluate(document, XPathConstants.NODE);
+            node.getParentNode().removeChild(node);
+
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer t = tf.newTransformer();
+            t.transform(new DOMSource(document), new StreamResult(new File(URL)));
+            System.out.println("XML file updated successfully");
+
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException | TransformerException ex) {
+            Logger.getLogger(Escritura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public static void crearReceta(String nombreNuevaReceta, ArrayList<String> ingredientes) {
         /**
          * Crea una nueva <receta> con sus respectivos <ingrediente>.
@@ -104,7 +138,8 @@ public class Escritura {
 
     public static void crearXMLvacio() {
         /**
-         * Si es la primera vez que se ejecuta el programa, se creará un archivo .xml vacío.
+         * Si es la primera vez que se ejecuta el programa, se creará un archivo
+         * .xml vacío.
          */
         try {
 
