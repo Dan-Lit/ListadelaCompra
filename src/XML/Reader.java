@@ -19,16 +19,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class Lector {
+public class Reader {
 
-    private static String URL = "recetario.xml";
+    private static String URL = "recipebook.xml";
 
-    public static ArrayList<String> listaRecetas() {
+    public static ArrayList<String> listRecipes() {
         /**
-         * Lista el nombre de todas las recetas registradas.
+         * List every recipe's name.
          *
-         * @return Devuelve un ArrayList de String que almacena el nombre de las
-         * recetas.
          * @author Daniel
          *
          */
@@ -38,20 +36,20 @@ public class Lector {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document documento = builder.parse(new File(URL));
 
-            NodeList listaRecetas = documento.getElementsByTagName("receta");
+            NodeList recipeNodes = documento.getElementsByTagName("receta");
 
-            for (int i = 0; i < listaRecetas.getLength(); i++) {
-                Node nodo = listaRecetas.item(i);
+            for (int i = 0; i < recipeNodes.getLength(); i++) {
+                Node nodo = recipeNodes.item(i);
                 if (nodo.getNodeType() == Node.ELEMENT_NODE) {
                     Element e = (Element) nodo;
-                    NodeList hijos = e.getChildNodes();
-                    for (int j = 0; j < hijos.getLength(); j++) {
-                        Node hijo = hijos.item(j);
-                        if (hijo.getNodeType() == Node.ELEMENT_NODE) {
+                    NodeList childNode = e.getChildNodes();
+                    for (int j = 0; j < childNode.getLength(); j++) {
+                        Node child = childNode.item(j);
+                        if (child.getNodeType() == Node.ELEMENT_NODE) {
 
-                            if (hijo.getNodeName().equals("nombre")) {
-                                String nombreReceta = hijo.getTextContent();
-                                list.add(nombreReceta);
+                            if (child.getNodeName().equals("nombre")) {
+                                String recipeName = child.getTextContent();
+                                list.add(recipeName);
 
                             }
 
@@ -60,18 +58,15 @@ public class Lector {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Reader.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
 
-    public static ArrayList<String> listaIngredientes(String nombreReceta) {
+    public static ArrayList<String> listIngredients(String recipeName) {
         /**
-         * Lista los ingredientes de la receta seleccionada.
+         * List the selected recipe's ingredients.
          *
-         * @param nombreReceta Nombre de la receta a buscar.
-         * @return Devuelve un ArrayList de String que almacena los ingredientes
-         * de la receta seleccionada.
          * @author Daniel.
          */
         ArrayList<String> list = new ArrayList();
@@ -81,7 +76,7 @@ public class Lector {
             Document doc = builder.parse(new File(URL));
 
             XPath xpath = XPathFactory.newInstance().newXPath();
-            String XPathExpresion = "/recetario/receta[nombre='" + nombreReceta + "']/ingrediente/text()";
+            String XPathExpresion = "/recetario/receta[nombre='" + recipeName + "']/ingrediente/text()";
             XPathExpression expr = xpath.compile(XPathExpresion);;
             Object result = expr.evaluate(doc, XPathConstants.NODESET);
 
@@ -92,9 +87,9 @@ public class Lector {
             }
 
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Reader.class.getName()).log(Level.SEVERE, null, ex);
         } catch (XPathExpressionException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Reader.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

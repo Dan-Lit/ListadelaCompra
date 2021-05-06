@@ -1,7 +1,7 @@
 package GUI;
 
-import XML.Escritura;
-import XML.Lector;
+import XML.Writer;
+import XML.Reader;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,39 +18,39 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-public class Ventana_Borrar extends JDialog implements ActionListener, ItemListener {
+public class Delete_Window extends JDialog implements ActionListener, ItemListener {
 
     /**
-     * Crea un JDialog que permite borrar recetas del recetario.
+     * Creates a JDialog that allows to delete recipes from the recipe book.
      *
      * @author Daniel
      */
     private final JPanel contentPanel = new JPanel();
-    private final ArrayList<String> recetasRegistradas = Lector.listaRecetas();
+    private final ArrayList<String> registeredRecipes = Reader.listRecipes();
     private JComboBox comboBox;
-    private JButton btnBorrar;
-    private String recetaABorrar = null;
+    private JButton deletebtn;
+    private String recipeToDelete = null;
 
-    public Ventana_Borrar(Ventana_Principal v, boolean modal) {
+    public Delete_Window(Main_Window v, boolean modal) {
         super(v, modal);
         setSize(624, 423);
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        iniciarComponentes();
-        setTitle("Borrar receta");
+        init();
+        setTitle("Delete recipe");
 
     }
 
-    private void iniciarComponentes() {
+    private void init() {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        JLabel lblTitulo = new JLabel("Borrar receta");
-        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitulo.setBounds(10, 10, 599, 28);
-        contentPanel.add(lblTitulo);
+        JLabel title = new JLabel("Delete recipe");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setBounds(10, 10, 599, 28);
+        contentPanel.add(title);
 
         JPanel panel = new JPanel();
         panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -63,12 +63,12 @@ public class Ventana_Borrar extends JDialog implements ActionListener, ItemListe
         comboBox.addItemListener(this);
         panel.add(comboBox);
 
-        btnBorrar = new JButton("Borrar seleccionada");
-        btnBorrar.setBounds(100, 100, 200, 20);
-        btnBorrar.addActionListener(this);
-        panel.add(btnBorrar);
+        deletebtn = new JButton("Delete selected recipe");
+        deletebtn.setBounds(100, 100, 200, 20);
+        deletebtn.addActionListener(this);
+        panel.add(deletebtn);
 
-        for (String i : recetasRegistradas) {
+        for (String i : registeredRecipes) {
             comboBox.addItem(i);
         }
     }
@@ -77,14 +77,14 @@ public class Ventana_Borrar extends JDialog implements ActionListener, ItemListe
     public void actionPerformed(ActionEvent e) {
 
         int output = JOptionPane.showConfirmDialog(this,
-                "¿Seguro que quieres borrar esta receta?",
-                "Atención",
+                "Are you sure you want to delete this recipe?",
+                "Caution",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
 
         switch (output) {
             case JOptionPane.YES_OPTION:
-                Escritura.borrarReceta(recetaABorrar);
+                Writer.deleteRecipe(recipeToDelete);
                 dispose();
                 break;
             case JOptionPane.NO_OPTION:
@@ -100,6 +100,6 @@ public class Ventana_Borrar extends JDialog implements ActionListener, ItemListe
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        recetaABorrar = (String) comboBox.getSelectedItem();
+        recipeToDelete = (String) comboBox.getSelectedItem();
     }
 }

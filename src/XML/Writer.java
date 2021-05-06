@@ -3,7 +3,6 @@ package XML;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -28,15 +27,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-public class Escritura {
+public class Writer {
 
-    private static final String URL = "recetario.xml";
+    private static final String URL = "recipebook.xml";
 
-    public static void borrarReceta(String nombreReceta) {
+    public static void deleteRecipe(String recipeName) {
         /**
-         * Borra una receta del recetario.
+         * Deletes a recipe from the recipe book.
          *
-         * @param nombreReceta nombre de la receta.
          * @author Daniel
          */
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -47,7 +45,7 @@ public class Escritura {
 
             XPathFactory xpf = XPathFactory.newInstance();
             XPath xpath = xpf.newXPath();
-            String xpathexpr = "//recetario/receta[nombre='" + nombreReceta + "']";
+            String xpathexpr = "//recetario/receta[nombre='" + recipeName + "']";
             XPathExpression expression = xpath.compile(xpathexpr);
 
             Node node = (Node) expression.evaluate(document, XPathConstants.NODE);
@@ -59,51 +57,15 @@ public class Escritura {
             System.out.println("XML file updated successfully");
 
         } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException | TransformerException ex) {
-            Logger.getLogger(Escritura.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public static void editarReceta(String nombreReceta) {
-
+    public static void createRecipe(String recipeName, ArrayList<String> ingredients) {
         /**
-         * Edita una receta ya registrada.
+         * Creates a new recipe in the recipe book.
          *
-         * @param nombreReceta nombre de la receta.
-         * @author Daniel
-         */
-        ArrayList<String> recetasRegistradas = Lector.listaRecetas();
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        Document document;
-
-        try {
-            document = dbf.newDocumentBuilder().parse(new File(URL));
-
-            XPathFactory xpf = XPathFactory.newInstance();
-            XPath xpath = xpf.newXPath();
-            String xpathexpr = "//recetario/receta[nombre='" + nombreReceta + "']";
-            XPathExpression expression = xpath.compile(xpathexpr);
-
-            Node node = (Node) expression.evaluate(document, XPathConstants.NODE);
-            node.getParentNode().removeChild(node);
-
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer t = tf.newTransformer();
-            t.transform(new DOMSource(document), new StreamResult(new File(URL)));
-            System.out.println("XML file updated successfully");
-
-        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException | TransformerException ex) {
-            Logger.getLogger(Escritura.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public static void crearReceta(String nombreNuevaReceta, ArrayList<String> ingredientes) {
-        /**
-         * Crea una nueva <receta> con sus respectivos <ingrediente>.
-         *
-         * @param nombreNuevaReceta Nombre de la receta.
-         * @param ingredientes Ingredientes que formarán la receta.
          */
         String filePath = URL;
         File xmlFile = new File(filePath);
@@ -114,19 +76,19 @@ public class Escritura {
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
-            //Introducir <receta> en el nodo raíz
-            Element receta = doc.createElement("receta");
-            doc.getFirstChild().appendChild(receta);
+            //Creates <receta> (Translation EN: recipe)  
+            Element recipe = doc.createElement("receta");
+            doc.getFirstChild().appendChild(recipe);
 
-            //Crear y nombrar nodo <nombre>
+            //Creates <nombre> (EN: name) 
             Element nombre = doc.createElement("nombre");
-            receta.appendChild(nombre);
-            Text nombreReceta = doc.createTextNode(nombreNuevaReceta);
+            recipe.appendChild(nombre);
+            Text nombreReceta = doc.createTextNode(recipeName);
             nombre.appendChild(nombreReceta);
 
-            //Crear y nombrar nodos <ingrediente> 
-            for (int i = 0; i < ingredientes.size(); i++) {
-                agregarIngrediente(receta, doc, ingredientes.get(i));
+            //Creates <ingredientes> (EN: ingredients)
+            for (int i = 0; i < ingredients.size(); i++) {
+                addIngredient(recipe, doc, ingredients.get(i));
             }
 
             saveFile(doc);
@@ -136,10 +98,10 @@ public class Escritura {
         }
     }
 
-    public static void crearXMLvacio() {
+    public static void createEmptyXML() {
         /**
-         * Si es la primera vez que se ejecuta el programa, se creará un archivo
-         * .xml vacío.
+         * If it's the first time you run the program, an empty XML file will be
+         * created.
          */
         try {
 
@@ -151,12 +113,12 @@ public class Escritura {
             saveFile(document);
 
         } catch (TransformerFactoryConfigurationError | TransformerException | IllegalArgumentException | ParserConfigurationException ex) {
-            Logger.getLogger(Escritura.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private static void saveFile(Document doc) throws TransformerFactoryConfigurationError, TransformerException, IllegalArgumentException, TransformerConfigurationException {
-//Escribe el documento actualizado en el archivo 
+        //Writes the updated file
         doc.getDocumentElement().normalize();
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -167,12 +129,12 @@ public class Escritura {
         System.out.println("XML file updated successfully");
     }
 
-    private static void agregarIngrediente(Element receta, Document doc, String nombreNuevoIngrediente) {
+    private static void addIngredient(Element receta, Document doc, String newIngredientName) {
 
-        Element ingrediente = doc.createElement("ingrediente");
-        receta.appendChild(ingrediente);
-        Text ingrediente1 = doc.createTextNode(nombreNuevoIngrediente);
-        ingrediente.appendChild(ingrediente1);
+        Element ingredientNode = doc.createElement("ingrediente");
+        receta.appendChild(ingredientNode);
+        Text ingredient = doc.createTextNode(newIngredientName);
+        ingredientNode.appendChild(ingredient);
 
     }
 

@@ -1,6 +1,6 @@
 package GUI;
 
-import XML.Lector;
+import XML.Reader;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,39 +15,38 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-public class Ventana_Listar extends JDialog implements ActionListener {
+public class List_Window extends JDialog implements ActionListener {
 
     /**
-     * Crea un JDialog que permite imprimir los ingredientes de las recetas que
-     * el usuario seleccione.
+     * Creates a JDialog that lists the selected recipe's ingredients.
      *
      * @author Daniel
      */
     private final JPanel contentPanel = new JPanel();
-    private JButton botonCancelar, botonGenerar;
+    private JButton cancelbtn, generatebtn;
     private JList<String> jlist;
     private String[] array;
     private JTextArea text;
 
-    public Ventana_Listar(Ventana_Principal v, boolean modal) {
+    public List_Window(Main_Window v, boolean modal) {
         super(v, modal);
         setSize(624, 423);
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
-        iniciarComponentes();
-        setTitle("Generar lista");
+        init();
+        setTitle("Generar lista"); //EN: Create shopping list 
 
     }
 
-    private void iniciarComponentes() {
+    private void init() {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        JLabel lblTitulo = new JLabel("Generar lista");
-        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitulo.setBounds(10, 10, 599, 28);
-        contentPanel.add(lblTitulo);
+        JLabel title = new JLabel("Generar lista"); //EN: Generate list 
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setBounds(10, 10, 599, 28);
+        contentPanel.add(title);
 
         JPanel panel = new JPanel();
         panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -55,8 +54,8 @@ public class Ventana_Listar extends JDialog implements ActionListener {
         contentPanel.add(panel);
         panel.setLayout(null);
 
-        //Convertimos la lista en un String[]
-        ArrayList<String> arrayList = Lector.listaRecetas();
+        //Must convert list into a String[] 
+        ArrayList<String> arrayList = Reader.listRecipes();
         array = arrayList.toArray(new String[arrayList.size()]);
         jlist = new JList<String>(array);
         jlist.setBounds(50, 50, 200, 200);
@@ -69,26 +68,26 @@ public class Ventana_Listar extends JDialog implements ActionListener {
         text.setBounds(335, 50, 200, 200);
         panel.add(text);
 
-        botonCancelar = new JButton("Cancelar");
-        botonCancelar.setBounds(463, 276, 89, 23);
-        botonCancelar.addActionListener(this);
-        panel.add(botonCancelar);
+        cancelbtn = new JButton("Cancelar"); //EN: Cancel
+        cancelbtn.setBounds(463, 276, 89, 23);
+        cancelbtn.addActionListener(this);
+        panel.add(cancelbtn);
 
-        botonGenerar = new JButton("Generar lista");
-        botonGenerar.setBounds(364, 276, 89, 23);
-        botonGenerar.addActionListener(this);
-        panel.add(botonGenerar);
+        generatebtn = new JButton("Generar lista"); //EN: Generate list
+        generatebtn.setBounds(364, 276, 89, 23);
+        generatebtn.addActionListener(this);
+        panel.add(generatebtn);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == botonGenerar) {
+        if (e.getSource() == generatebtn) {
             text.setText(null);
             for (int i = 0; i < array.length; i++) {
                 if (jlist.isSelectedIndex(i)) {
                     String seleccion = array[i];
-                    ArrayList<String> ingredientesReceta = Lector.listaIngredientes(seleccion);
+                    ArrayList<String> ingredientesReceta = Reader.listIngredients(seleccion);
                     for (int j = 0; j < ingredientesReceta.size(); j++) {
                         text.append(ingredientesReceta.get(j) + "\n");
                     }
@@ -97,7 +96,7 @@ public class Ventana_Listar extends JDialog implements ActionListener {
 
             }
         }
-        if (e.getSource() == botonCancelar) {
+        if (e.getSource() == cancelbtn) {
             dispose();
         }
 
