@@ -1,8 +1,5 @@
-# Aplicación Lista de la compra
-Creé esta aplicación para una amiga, que me contó que para ahorrar al hacer la compra le gustaría saber qué ingredientes necesitaba comprar en función de su menú semanal.
+# Shopping List App
 
-El objetivo era, por lo tanto, desarrollar una app con capacidad de almacenar recetas junto a sus ingredientes. La aplicación te permite seleccionar los platos, y te elabora una lista de la compra con los ingredientes correspondientes.
+This app was created for a friend who needed to save money by knowing exactly what to buy prior to going to the store. Because she makes weekly meal preps, this was an easy task: with this app she's now able to store all of his recipes, and when she needs it she can tell the app to generate her shopping list based on the chosen meals for that week.
 
-Un desarrollo fácil pero con impacto: he conseguido ayudar a mi amiga a ahorrar en su compra. La aplicación tiene un diseño muy sencillo y una funcionalidad limitada, que irá aumentando con el tiempo. 
-
-La aplicación utiliza XML para almacenar las recetas. Para trabajar con el documento se utiliza la DOM API y XPath. 
+The app has a simple design and a limited funcionality, but it serves its purpose. Nevertheless, I keep on listening to her suggestions and upgrading the project. Feel free to colaborate. 
