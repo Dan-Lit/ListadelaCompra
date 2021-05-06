@@ -1,17 +1,17 @@
 
-import GUI.Ventana_Principal;
-import XML.Escritura;
+import GUI.Main_Window;
+import XML.Writer;
 import java.io.File;
 
 public class Main {
 
     public static void main(String args[]) {
-        String URL = "recetario.xml";
+        String URL = "recipebook.xml";
         File file = new File(URL);
         
-        if (!file.exists()) Escritura.crearXMLvacio();
+        if (!file.exists()) Writer.createEmptyXML();
         
-        Ventana_Principal v = new Ventana_Principal();
+        Main_Window v = new Main_Window();
     }
 
 }
