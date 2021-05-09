@@ -39,7 +39,7 @@ public class Delete_Window extends JDialog implements ActionListener, ItemListen
         getContentPane().setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         init();
-        setTitle("Delete recipe");
+        setTitle("Borrar receta"); //EN: Delete recipe
 
     }
 
@@ -47,7 +47,7 @@ public class Delete_Window extends JDialog implements ActionListener, ItemListen
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        JLabel title = new JLabel("Delete recipe");
+        JLabel title = new JLabel("Borrar receta"); //EN: Delete recipe
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setBounds(10, 10, 599, 28);
         contentPanel.add(title);
@@ -63,7 +63,7 @@ public class Delete_Window extends JDialog implements ActionListener, ItemListen
         comboBox.addItemListener(this);
         panel.add(comboBox);
 
-        deletebtn = new JButton("Delete selected recipe");
+        deletebtn = new JButton("Borrar receta seleccionada"); //EN: Delete selected recipe
         deletebtn.setBounds(100, 100, 200, 20);
         deletebtn.addActionListener(this);
         panel.add(deletebtn);
@@ -77,8 +77,8 @@ public class Delete_Window extends JDialog implements ActionListener, ItemListen
     public void actionPerformed(ActionEvent e) {
 
         int output = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete this recipe?",
-                "Caution",
+                "¿Seguro que quieres borrar esta receta?", //EN: Are you sure you want to delete this recipe?
+                "Atención", //EN: Caution
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
 

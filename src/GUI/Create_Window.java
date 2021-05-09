@@ -166,12 +166,12 @@ public class Create_Window extends JDialog implements ActionListener {
         aviso.setBounds(250, 22 + 60, 200, 21);
         panel.add(aviso);*/
 
-        cancelbtn = new JButton("Cancel");
+        cancelbtn = new JButton("Cancelar"); //EN: Cancel
         cancelbtn.setBounds(463, 276, 89, 23);
         cancelbtn.addActionListener(this);
         panel.add(cancelbtn);
 
-        addbtn = new JButton("Add");
+        addbtn = new JButton("Añadir"); //EN: Add
         addbtn.setBounds(364, 276, 89, 23);
         addbtn.addActionListener(this);
         panel.add(addbtn);
